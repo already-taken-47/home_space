@@ -28,6 +28,42 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'class'=>'frontend\components\LangUrlManager',
+            'rules' => [
+                '/' => 'site/index',
+                '<controller:\w+>/<action:\w+>/'=>'<controller>/<action>',
+            ],
+        ],
+        'assetManager' => [
+             'basePath' => '@webroot/assets',
+             'baseUrl' => '@web/assets'
+        ],
+        'request' => [
+            'baseUrl' => '',
+            'class' => 'frontend\components\LangRequest'
+        ],
+        'language'=>'ru-RU',
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/language',
+                    'sourceLanguage' => 'ru',
+                    'fileMap' => [
+                        'main' => 'main.php',
+                        'titles' => 'titles.php',
+                    ],
+                ],
+            ],
+        ],
     ],
     'params' => $params,
+    'modules' => [
+        'account' => [
+            'class' => 'frontend\account\Account',
+        ],
+    ],
 ];

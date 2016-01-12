@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use frontend\widgets\WLang;
 
 AppAsset::register($this);
 ?>
@@ -19,7 +20,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Project</title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -34,17 +35,19 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+    $menu_items = Yii::t('main', 'top_menu');
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => $menu_items['home'], 'url' => ['/site/index']],
+        ['label' => $menu_items['about'], 'url' => ['/site/about']],
+        ['label' => $menu_items['contact'], 'url' => ['/site/contact']],
+        ['label' => $menu_items['account'], 'url' => '/account/account'],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => $menu_items['register'], 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => $menu_items['login'], 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+            'label' => $menu_items['logout'].'(' . Yii::$app->user->identity->username . ')',
             'url' => ['/site/logout'],
             'linkOptions' => ['data-method' => 'post']
         ];
@@ -62,6 +65,12 @@ AppAsset::register($this);
         ]) ?>
         <?= Alert::widget() ?>
         <?= $content ?>
+        <br>
+        <?= Yii::t('main', 'key');?>
+        <br>
+        <br>
+        <br>
+        <?= WLang::widget();?>
     </div>
 </div>
 
